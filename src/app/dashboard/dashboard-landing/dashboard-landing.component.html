@@ -1,0 +1,57 @@
+<div class="flex flex-col items-center justify-center p-8 gap-9">
+    <div class="flex items-start justify-center gap-3 w-1/3">
+        <img src="assets/Logo.svg" alt="">
+        <div class="flex flex-col gap-4">
+            <span class="text-4xl">My Task Bord</span>
+            <span>Tasks to keep organised </span>
+        </div>
+        <img src="assets/Edit_duotone.svg" alt="">
+    </div>
+    <div *ngIf="tasks.length === 0"
+        class="w-1/3 border-dashed border-[#00000033] border-2 rounded-lg flex flex-col items-center justify-center p-5 text-sm ">
+        <span class="font-medium">No tasks yet</span>
+        <span class="text-[#8d97a7]">Get started by creating a new task. </span>
+    </div>
+
+    <div *ngFor="let task of tasks" (click)="openDailog(task)"
+        class="w-1/3 bg-[#F5E8D5] p-5 border-none rounded-lg flex items-center justify-between hover:scale-110 transition duration-300 ease-in-out gap-4"
+        [ngClass]="{ '!bg-[#A0ECB1]' : task.status === 'completed', '!bg-[#E3E8EF]': task.status === 'inprogress' || task.status==='', 'bg-[#F7D4D3] ': task.status === 'notdone' ,'bg-[#F5D565]' : task.status === 'pending'}">
+        <div class="flex items-center gap-4">
+            <div class="w-10 h-10 bg-[#ffff] rounded-lg flex items-center justify-center">
+                <img [src]="task.icon" alt="" class="w-6 h-6">
+            </div>
+            <div class="flex flex-col items-start">
+                <span class="text-xl font-medium">{{task.taskName}}</span>
+                <span>{{task.description}}</span>
+            </div>
+        </div>
+        <ng-container [ngSwitch]="task.status">
+            <ng-template [ngSwitchCase]="'completed'">
+                <div class="w-10 h-10 bg-[#32D657] rounded-lg flex items-center justify-center">
+                    <img src="assets/Done_round.svg" alt="Completed">
+                </div>
+            </ng-template>
+            <ng-template [ngSwitchCase]="'pending'">
+                <div class="w-10 h-10 bg-[#E9A23B] rounded-lg flex items-center justify-center">
+                    <img src="assets/Time_atack_duotone.svg" alt="Pending">
+                </div>
+            </ng-template>
+            <ng-template [ngSwitchCase]="'notdone'">
+                <div class="w-10 h-10 bg-[#DD524C] rounded-lg flex items-center justify-center">
+                    <img src="assets/close_ring_duotone-1.svg" alt="Not Done">
+                </div>
+            </ng-template>
+        </ng-container>
+
+    </div>
+    <button
+        class="w-1/3 bg-[#F5E8D5] p-5 border-none rounded-lg flex items-start hover:scale-110 transition duration-300 ease-in-out text-xl font-medium"
+        (click)="openDailog()">
+        <div class="flex items-center justify-center gap-4">
+            <div class="w-10 h-10 bg-[#E9A23B] rounded-lg flex items-center justify-center">
+                <img src="assets/Add_round_duotone.svg" alt="">
+            </div>
+            Add Task
+        </div>
+    </button>
+</div>

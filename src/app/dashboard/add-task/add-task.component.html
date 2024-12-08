@@ -1,0 +1,74 @@
+<div class="p-4 flex flex-col gap-8 h-full">
+    <div class="flex justify-between items-center">
+        <div class="text-lg font-medium" *ngIf="!data">Add New Task</div>
+        <div class="text-lg font-medium" *ngIf="data">Task Details</div>
+        <div class="w-10 h-10 bg-[#fff] rounded-lg flex items-center justify-center border border-[#00000033] cursor-pointer"
+            mat-dialog-close>
+            <img src="assets/close_ring_duotone-1.svg" alt="">
+        </div>
+    </div>
+    <div class="flex gap-8 flex-col flex-grow">
+        <div class="flex flex-col gap-2">
+            <label for="" class="font-medium text-sm text-[#97A3B6]">Task Name</label>
+            <input type="text" name="" id="" class="outline-none border border-[#00000033] rounded-md p-2 text-sm"
+                placeholder="Enter a Task Name" [(ngModel)]="taskName">
+        </div>
+        <div class="flex flex-col gap-2">
+            <label for="" class="font-medium text-sm text-[#97A3B6]">Description</label>
+            <textarea type="text" name="" id=""
+                class="outline-none border border-[#00000033] rounded-md p-2 text-sm resize-none"
+                placeholder="Enter a Short Description" rows="10" [(ngModel)]="description"></textarea>
+        </div>
+        <div class="flex flex-col gap-2">
+            <label for="" class="font-medium text-sm text-[#97A3B6]">Icon</label>
+            <div class="flex gap-3">
+                <div class=" bg-[#E5E7EB] rounded-lg flex items-center justify-center w-10 h-10 cursor-pointer"
+                    *ngFor="let icon of icons" [ngClass]="{ 'border-2 border-[#3662E3]' : selectedIcons === icon }">
+                    <img [src]="icon" alt="" (click)="selectedIcon(icon)" class="w-6 h-6">
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-col gap-2">
+            <label for="" class="font-medium text-sm text-[#97A3B6]">Status</label>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="p-1 rounded-lg hover:scale-105 transition duration-300 ease-in-out"
+                    *ngFor="let status of statuses"
+                    [ngClass]="{  'bg-[#e1edff]' : selectedStatusType === status.value , 'border-2 border-[#E5E7EB]' : selectedStatusType !== status.value}">
+                    <div class="flex items-center justify-start gap-4" (click)="selectedStatus(status.value)">
+                        <ng-container [ngSwitch]="status.value">
+                            <ng-template [ngSwitchCase]="'completed'">
+                                <div class="w-10 h-10 bg-[#32D657] rounded-lg flex items-center justify-center">
+                                    <img src="assets/Done_round.svg" alt="Completed">
+                                </div>
+                            </ng-template>
+                            <ng-template [ngSwitchCase]="'pending'">
+                                <div class="w-10 h-10 bg-[#E9A23B] rounded-lg flex items-center justify-center">
+                                    <img src="assets/Time_atack_duotone.svg" alt="Pending">
+                                </div>
+                            </ng-template>
+                            <ng-template [ngSwitchCase]="'notdone'">
+                                <div class="w-10 h-10 bg-[#DD524C] rounded-lg flex items-center justify-center">
+                                    <img src="assets/close_ring_duotone-1.svg" alt="Not Done">
+                                </div>
+                            </ng-template>
+                        </ng-container>
+                        <span> {{status.key}} </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class=" flex justify-end mt-auto gap-5">
+        <button *ngIf="!data"
+            class="bg-[#3662E3] text-white font-medium py-2 px-4 rounded-full hover:scale-105 transition duration-300 ease-in-out"
+            (click)="addTask()">Add Task</button>
+        <button *ngIf="data"
+            class="bg-[#9CA3AF] text-white font-medium py-2 px-4 rounded-full hover:scale-105 transition duration-300 ease-in-out flex gap-2 items-center justify-center"
+            (click)="deleteTask(data)">Delete Task
+            <img src="assets/Trash.svg" alt="Completed">
+        </button>
+        <button *ngIf="data"
+            class="bg-[#3662E3] text-white font-medium py-2 px-4 rounded-full hover:scale-105 transition duration-300 ease-in-out"
+            (click)="updateTask(data)">Save Task</button>
+    </div>
+</div>
